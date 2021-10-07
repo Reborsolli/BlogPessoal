@@ -1,6 +1,5 @@
 package org.generation.blogPessoal.controller;
 
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.text.ParseException;
@@ -39,18 +38,14 @@ public class UsuarioControllerTest {
 
 	@BeforeAll
 	public void start() throws ParseException {
-
 		usuarioAdmin = new Usuario(0L, "Administrador", "admin@email.com.br", "admin123");
-
+		
 		if (!usuarioRepository.findByUsuario(usuarioAdmin.getUsuario()).isPresent()) {
-
 			HttpEntity<Usuario> request = new HttpEntity<Usuario>(usuarioAdmin);
 			testRestTemplate.exchange("/usuarios/cadastrar", HttpMethod.POST, request, Usuario.class);
-
 		}
 
 		usuario = new Usuario(0L, "Paulo Antunes", "paulo@email.com.br", "13465278");
-
 		usuarioUpdate = new Usuario(2L, "Paulo Antunes de Souza", "paulo_souza@email.com.br", "souza123");
 	}
 
@@ -58,11 +53,8 @@ public class UsuarioControllerTest {
 	@Order(1)
 	@DisplayName("✔ Cadastrar Usuário!")
 	public void deveRealizarPostUsuario() {
-
 		HttpEntity<Usuario> request = new HttpEntity<Usuario>(usuario);
-
 		ResponseEntity<Usuario> resposta = testRestTemplate.exchange("/usuarios/cadastrar", HttpMethod.POST, request, Usuario.class);
-
 		assertEquals(HttpStatus.CREATED, resposta.getStatusCode());
 
 	}
@@ -71,10 +63,8 @@ public class UsuarioControllerTest {
 	@Order(2)
 	@DisplayName("👍 Listar todos os Usuários!")
 	public void deveMostrarTodosUsuarios() {
-
 		ResponseEntity<String> resposta = testRestTemplate.withBasicAuth("admin@email.com.br", "admin123")
 				.exchange("/usuarios/all", HttpMethod.GET, null, String.class);
-
 		assertEquals(HttpStatus.OK, resposta.getStatusCode());
 	}
 
@@ -82,13 +72,11 @@ public class UsuarioControllerTest {
 	@Order(3)
 	@DisplayName("😳 Alterar Usuário!")
 	public void deveRealizarPutUsuario() {
-
 		HttpEntity<Usuario> request = new HttpEntity<Usuario>(usuarioUpdate);
-
 		ResponseEntity<Usuario> resposta = testRestTemplate.withBasicAuth("admin@email.com.br", "admin123")
 				.exchange("/usuarios/atualizar", HttpMethod.PUT, request, Usuario.class);
-
 		assertEquals(HttpStatus.OK, resposta.getStatusCode());
 
 	}
+
 }

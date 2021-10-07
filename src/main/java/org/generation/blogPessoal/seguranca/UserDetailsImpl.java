@@ -20,6 +20,7 @@ public class UserDetailsImpl implements UserDetails{
 	
 	public UserDetailsImpl() {}
 	
+	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
@@ -61,5 +62,5 @@ public class UserDetailsImpl implements UserDetails{
 		// TODO Auto-generated method stub
 		return true;
 	}
-	
+
 }

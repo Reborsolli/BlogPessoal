@@ -21,14 +21,13 @@ public class UsuarioService {
 	private UsuarioRepository repository;
 
 	public List<Usuario> listarUsuarios() {
-
 		return repository.findAll();
-
 	}
 
 	public Optional<Usuario> CadastrarUsuario(Usuario usuario) {
 		Optional<Usuario> user = repository.findByUsuario(usuario.getUsuario());
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		
 		if (user.isPresent()) {
 			return Optional.ofNullable(null);
 		}
@@ -51,7 +50,10 @@ public class UsuarioService {
 				String authHeader = "Basic " + new String(encodedAuth);
 
 				user.get().setToken(authHeader);
+				user.get().setId(usuario.get().getId());
 				user.get().setNome(usuario.get().getNome());
+				user.get().setFoto(usuario.get().getFoto());
+				user.get().setTipo(usuario.get().getTipo());
 
 				return user;
 			}
@@ -77,4 +79,5 @@ public class UsuarioService {
 
 		}
 	}
+
 }
